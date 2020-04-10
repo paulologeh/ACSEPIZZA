@@ -1,12 +1,11 @@
-//operations.h header file
-// Contains struct for order queues
-//Contains methods to generate order , calculate preparation time,  check the oven and order complete function
-
-
-#include <string.h>
+#include <string>
 #include <iostream>
-#include<queue>
+#include <fstream>
+#include <queue>
+#include <ctime>
+
 using namespace std;
+
 
 struct vegOrder
 {
@@ -21,7 +20,7 @@ struct vegOrder
 struct regOrder
 {
 	int readyTime;
-	int orderTime;
+	time_t orderTime;
 	int toppings[9];
 	bool pizzaType;
 	int orderNumber;
@@ -32,18 +31,20 @@ struct regOrder
 class operations
 {
 	private:
-		queue<regOrder>regRoll;
-		queue<vegOrder>vegRoll;
+		queue <regOrder> regRoll;
+		queue <vegOrder> vegRoll;
 		int vegOven;
 		int regOven;
 		int lastReadyTimeVeg;
 		int lastReadyTimeReg;
+		ofstream logs;
 
 	public:
-		void generateOrder(int);
+		void generateOrder(time_t);
 		int calculatePrepTime(int);
 		int vegOvenReady(int);
 		int regOvenReady(int);
 		void vegOrderComplete(int);
 		void regOrderComplete(int);
+		void logging(string);
 };

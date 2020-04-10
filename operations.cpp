@@ -1,123 +1,132 @@
 //Builds functions to generate order, calculate preparation time, oven ready status and order complete fucntion
-#include"operations.h"
-#include<string.h>
-#include<math.h>
-#include<iostream>
-#include<cstdlib>
-#include<queue>
+#include "operations.h"
+#include <string>
+#include <sstream>
+#include <math.h>
+#include <iostream>
+#include <cstdlib>
+#include <queue>
+#include <ctime>
+
 using namespace std;
 
-void operations::generateOrder(int currentTime)
+void operations::generateOrder(time_t currentTime)
 {
-	int choices[9];	string more; int i,size=1;
-	regOrder anOrder; // non vegetarian queue
-	vegOrder AnOrder; // vegetarian queue
+	cout << "Please choose Pizza topping. You are only allowed a maximum of 9" << endl;
+	cout << "1. pepperoni  2. mushrooms  3. sausage  4. peppers  5. chicken  6. beef  7. pineapple 8. bacon 9. sweetcorn" << endl;
+	cout << "Choose topping by typing entering the topping number then pressing Enter" << endl;
+	// cout << "Enter 0 to stop entering toppings" << endl;
+	int i = 0 , choices[9];
+	bool vegetarian = true, userInput = true;
+	do
+	{
+		int entered;
+		cin >> entered;
+		if (entered == 0 || i >= 9)
+		{
+			userInput = false;
+		}
+		else
+		{
+			choices[i] = entered;
+			if(choices[i]==1 || choices[i]==3 || choices[i]==5 || choices[i]==6 || choices[i]==8)
+			{
+				vegetarian = false; // If option 1, 3, 5, 6 or 8 selected then its not vegetarian
+			}
+		}
+		i++;
+	} while (userInput);
+	cout << "Your Order is Being Processed .........." << endl;
+		
+	regOrder regularOrder; // non vegetarian queue
+	vegOrder vegetarianOrder; // vegetarian queue
+ 	
+	 if(vegetarian)
+ 	{
+// 		vegetarianOrder.orderTime=currentTime; // Sets order time into struct in queue
+		stringstream currentTimeSS;
+		currentTimeSS << currentTime;
+		string message = " Vegetarian Pizza ordered at time: " + currentTimeSS.str();
+		logging(message);
+	 }
+	 else
+	 {
+		stringstream currentTimeSS;
+		currentTimeSS << currentTime;
+		string message = " Regular Pizza ordered at time: " + currentTimeSS.str();
+		logging(message);
+	 }
+	 
+ //		if (vegeterian) {
+ // 	cout << "Vegeterian Pizza ordered at : " << currentTime; // Displays order time
+// 		vegetarianOrder.pizzaType=true;// true means vegetarian
+// 		vegetarianOrder.orderNumber=100+ vegetarianOrder.orderTime; // Generates order number
+// 		cout<<" OrderNumber: "<<vegetarianOrder.orderNumber;  // Displays order numer
+// 		cout<<" Toppings are:";		
+// 		for(int k=0;k<size;k++)
+// 		{
+// 			vegetarianOrder.toppings[k]=choices[k]; // Stores toppings in struct
+// 			cout<<" "<<choices[k];   // Displays toppings chosen
+// 		}	
+// 		vegOven=vegOvenReady(currentTime);  // Passes current time into function and returns oven status
+
+// 		if(vegOven==1) // Oven is ready
+// 		{
+// 			vegetarianOrder.ovenTime= vegetarianOrder.orderTime + calculatePrepTime(size); // calculates time to go into the oven
+// 	    }
+// 		else if(vegOven==0) // Oven is full
+// 		{
+// 			int vegdelay=(lastReadyTimeVeg-currentTime); // Calulcates delay for order
+// 			// vegetarianOrder.ovenTime= vegetarianOrder.orderTime + calculatePrepTime(size) + (lastReadyTimeVeg-currentTime); // adds the delay to the oven time
+// 			vegetarianOrder.ovenTime=lastReadyTimeVeg;
+// 			cout<<" Pizza to be delayed by "<<vegdelay<<"s";
+// 		}
+		
+// 		cout<<" Order is due to enter Oven at "<<vegetarianOrder.ovenTime; // Displays the oven time
+// 		vegetarianOrder.readyTime=180+ vegetarianOrder.ovenTime; // Displays the ready time
+// 		cout<<" Order will be ready at "<<vegetarianOrder.readyTime<<endl;	// Displays the ready time
+// 		vegRoll.push(vegetarianOrder);		// Adds order to the end of the queue
+// 	}
 	
-	cout<<"Please choose Pizza topping. You are only allowed a maximum of 9"<<endl;
-	cout<<"Choose topping by typing entering the number before it"<<endl;
-	cout<<"1. pepperoni  2. mushrooms  3. sausage  4. peppers  5. chicken  6. beef  7. pineapple 8. bacon 9. sweetcorn"<<endl;
-
-	for(i=0;i<9;i++)
-	{
-		cout<<"Please enter topping "; // Prompts user to input topping
-		cin>>choices[i]; 
-		cout<<"You enetered "<<choices[i]<<endl;  // Displays choice
-		cout<<"Would you like to add more toppings? (yes/no)"<<endl;  // Prompts user for more topping choice
-		cin>>more;
-		if(more=="no") // if no more toppings
-		{
-		i=9;	// skip to end of the loop
-		}
-		else if(more=="yes") // if more toppings
-		{
-			size=size+1;  // stores number of toppings
-		}
-	}
-	// Determine pizza type;
-	int vegetarian=1; //Assumes vegetarian by default
-	// If option 1, 3, 5, 6 or 8 selected then its not vegetarian
-	int j,k;
-
-	for(j=0;j<size;j++)
-	{
-		if(choices[j]==1 || choices[j]==3 || choices[j]==5 || choices[j]==6 || choices[j]==8)
-		{
-			vegetarian=0;
-		}
-	}	
-
-	if(vegetarian==1) // Is vegetarian status unchanged
-	{
-		AnOrder.orderTime=currentTime; // Sets order time into struct in queue
-		cout<<"Pizza is vegetarian  OrderTime: "<<currentTime; // Displays order time
-		AnOrder.pizzaType=true;// true means vegetarian
-		AnOrder.orderNumber=100+ AnOrder.orderTime; // Generates order number
-		cout<<" OrderNumber: "<<AnOrder.orderNumber;  // Displays order numer
-		cout<<" Toppings are:";		
-		for(k=0;k<size;k++)
-		{
-			AnOrder.toppings[k]=choices[k]; // Stores toppings in struct
-			cout<<" "<<choices[k];   // Displays toppings chosen
-		}	
-		vegOven=vegOvenReady(currentTime);  // Passes current time into function and returns oven status
-
-		if(vegOven==1) // Oven is ready
-		{
-			AnOrder.ovenTime= AnOrder.orderTime + calculatePrepTime(size); // calculates time to go into the oven
-	    }
-		else if(vegOven==0) // Oven is full
-		{
-			int vegdelay=(lastReadyTimeVeg-currentTime); // Calulcates delay for order
-			// AnOrder.ovenTime= AnOrder.orderTime + calculatePrepTime(size) + (lastReadyTimeVeg-currentTime); // adds the delay to the oven time
-			AnOrder.ovenTime=lastReadyTimeVeg;
-			cout<<" Pizza to be delayed by "<<vegdelay<<"s";
-		}
-		
-		cout<<" Order is due to enter Oven at "<<AnOrder.ovenTime; // Displays the oven time
-		AnOrder.readyTime=180+ AnOrder.ovenTime; // Displays the ready time
-		cout<<" Order will be ready at "<<AnOrder.readyTime<<endl;	// Displays the ready time
-		vegRoll.push(AnOrder);		// Adds order to the end of the queue
-	}
+// 	else if(vegetarian==0)
+// 	{
 	
-	else if(vegetarian==0)
-	{
-	
-		cout<<"Pizza is not vegetarian OrderTime: "<<currentTime; // Displays order details
-		anOrder.orderTime=currentTime; // Sets ordertime to be the current time
-		anOrder.pizzaType=false; // false means no vegetarian
-		anOrder.orderNumber=100+ anOrder.orderTime; // Generates the order number
-		cout<<" OrderNumber: "<<anOrder.orderNumber; // Displays order number
-		cout<<" Toppings are:";
-		for(k=0;k<size;k++)
-		{
-			anOrder.toppings[k]=choices[k]; // Stores toppings
-			cout<<" "<<choices[k];  // Displays toppings
-		}	
+// 		cout<<"Pizza is not vegetarian OrderTime: "<<currentTime; // Displays order details
+// 		regularOrder.orderTime=currentTime; // Sets ordertime to be the current time
+// 		regularOrder.pizzaType=false; // false means no vegetarian
+// 		regularOrder.orderNumber=100+ regularOrder.orderTime; // Generates the order number
+// 		cout<<" OrderNumber: "<<regularOrder.orderNumber; // Displays order number
+// 		cout<<" Toppings are:";
+// 		for(int k=0;k<size;k++)
+// 		{
+// 			regularOrder.toppings[k]=choices[k]; // Stores toppings
+// 			cout<<" "<<choices[k];  // Displays toppings
+// 		}	
 		
 		
 		
-		regOven=regOvenReady(currentTime); // Passes current time into function to check if the oven is ready
-		if(regOven==1) // Oven is available
-		{
-		anOrder.ovenTime=anOrder.orderTime  + calculatePrepTime(size);	 // calculates due oven time
-		}
-		else if(regOven==0) // Oven is unavailable
-		{
-		int regdelay;
-		regdelay=(lastReadyTimeReg-currentTime); // calculates delay
-		//anOrder.ovenTime=anOrder.orderTime  + calculatePrepTime(size) +(lastReadyTimeReg-currentTime); //adds delay to calculated oven time
-		anOrder.ovenTime=lastReadyTimeReg;
+// 		regOven=regOvenReady(currentTime); // Passes current time into function to check if the oven is ready
+// 		if(regOven==1) // Oven is available
+// 		{
+// 		regularOrder.ovenTime=regularOrder.orderTime  + calculatePrepTime(size);	 // calculates due oven time
+// 		}
+// 		else if(regOven==0) // Oven is unavailable
+// 		{
+// 		int regdelay;
+// 		regdelay=(lastReadyTimeReg-currentTime); // calculates delay
+// 		//regularOrder.ovenTime=regularOrder.orderTime  + calculatePrepTime(size) +(lastReadyTimeReg-currentTime); //adds delay to calculated oven time
+// 		regularOrder.ovenTime=lastReadyTimeReg;
 		
-		cout<<" Pizza to be delayed by "<<regdelay<<"s"; // Shows delay times
-		}
+// 		cout<<" Pizza to be delayed by "<<regdelay<<"s"; // Shows delay times
+// 		}
 		
 			
-		cout<<" Order is due to enter Oven at "<<anOrder.ovenTime; // Displays the oven due time
-		anOrder.readyTime=180+ anOrder.ovenTime;  // calculates the ready time
-		cout<<" Order will be ready at "<<anOrder.readyTime<<endl; // displays the ready time
-		regRoll.push(anOrder); // adds order to the queue
-	}
-	cout<<" "<<endl;
+// 		cout<<" Order is due to enter Oven at "<<regularOrder.ovenTime; // Displays the oven due time
+// 		regularOrder.readyTime=180+ regularOrder.ovenTime;  // calculates the ready time
+// 		cout<<" Order will be ready at "<<regularOrder.readyTime<<endl; // displays the ready time
+// 		regRoll.push(regularOrder); // adds order to the queue
+// 	}
+// 	cout<<" "<<endl;
 }
 
 int operations::calculatePrepTime(int size)
@@ -199,4 +208,11 @@ void operations::vegOrderComplete(int currentTime)
 		cout<<"Order Number "<<order<<" is ready"<<endl;
 		vegRoll.pop(); // pops order number that is complete outside
 	}	
+}
+
+void operations::logging(string message)
+{
+	logs.open("acse_pizza.log",ios::app);
+	logs << message << endl;
+	logs.close();
 }

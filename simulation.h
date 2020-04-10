@@ -1,22 +1,23 @@
 // header file string.h
 // contains function to simulate time and determine order
 
-#include<string.h>
+#include <string.h>
 #include <iostream>
-#include"operations.h"
+#include <ctime>
+#include "operations.h"
 
 using namespace std;
 
 class simulation
 {
 	private:
-		bool placeOrder; // defaults statuse is false
-		int currentTime; // current time of the program
+		time_t currentTime;
+
 	public:
-		
-		bool determineOrder();
-		void simulateTime();
+
+		void simulate();
+		void printACSE();
 		operations pizza;
-		
-		
+
+
 };
