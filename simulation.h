@@ -12,6 +12,7 @@ class simulation
 {
 	private:
 		time_t currentTime;
+		int orderID;
 
 	public:
 

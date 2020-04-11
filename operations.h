@@ -6,45 +6,43 @@
 
 using namespace std;
 
+// struct vegOrder
+// {
+// 	int readyTime;
+// 	time_t orderTime;
+// 	int toppings[9];
+// 	bool pizzaType;
+// 	int orderNumber;
+// 	time_t ovenTime;
+// };
 
-struct vegOrder
+struct order
 {
-	int readyTime;
-	int orderTime;
-	int toppings[9];
-	bool pizzaType;
-	int orderNumber;
-	int ovenTime;		
-};
-
-struct regOrder
-{
-	int readyTime;
+	time_t readyTime;
 	time_t orderTime;
-	int toppings[9];
-	bool pizzaType;
+	time_t ovenTime;
 	int orderNumber;
-	int ovenTime;
+	int toppings[9];
+	string pizzaType;
 };
-
 
 class operations
 {
-	private:
-		queue <regOrder> regRoll;
-		queue <vegOrder> vegRoll;
-		int vegOven;
-		int regOven;
-		int lastReadyTimeVeg;
-		int lastReadyTimeReg;
-		ofstream logs;
+private:
+	bool vegOven;
+	bool regOven;
+	time_t lastReadyTimeVeg;
+	time_t lastReadyTimeReg;
+	ofstream logs;
+	queue<order> regRoll;
+	queue<order> vegRoll;
 
-	public:
-		void generateOrder(time_t);
-		int calculatePrepTime(int);
-		int vegOvenReady(int);
-		int regOvenReady(int);
-		void vegOrderComplete(int);
-		void regOrderComplete(int);
-		void logging(string);
+public:
+	time_t calculatePrepTime(int);
+	bool vegOvenReady(time_t);
+	bool regOvenReady(time_t);
+	void generateOrder(time_t, int);
+	void vegOrderComplete(time_t);
+	void regOrderComplete(time_t);
+	void logging(string);
 };

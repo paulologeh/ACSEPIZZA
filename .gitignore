@@ -38,3 +38,5 @@ test/
 acse_pizza.log
 error.txt
 todo.txt
+*.DS_Store
+*.dSYM

@@ -14,14 +14,15 @@ using namespace std;
 
 void simulation::simulate()
 {	
-	time_t startTime, currentTime, time2PrintTime, T;
+	time_t startTime, time2PrintTime, T;
 	time(&startTime);
 	time(&currentTime);
 	time(&time2PrintTime);
 	time(&T);
 	time_t timeDifference = difftime(currentTime, startTime);
-
+	
 	int isOrder, randSum = 0, orderCount = 0;
+	orderID = 0;
 	srand (time(NULL));
 	
 
@@ -30,15 +31,17 @@ void simulation::simulate()
 		time(&currentTime);
 		timeDifference = difftime(currentTime, startTime);
 		
+		
 		if( difftime(currentTime, T) >= INTERVAL)  // Sets simulation time to intervals of INTERVAL
 		{
+			cout << "a";
 			isOrder = rand() % 60 + 1;  // generate random number every second
-			if (isOrder == 28) // 28 is actually quite rare
+			if (isOrder == 28 || isOrder == 5) // 28 is actually quite rare
 			{
 				cout << "Order placed after " << timeDifference << " seconds" << endl;
 				cout << "Please prepare Pizza Base " << endl;
-
-				pizza.generateOrder(timeDifference);
+				orderID ++;
+				pizza.generateOrder(timeDifference, orderID);
 				
 				orderCount += 1;
 			}
@@ -57,7 +60,11 @@ void simulation::simulate()
 		// 	message += " orderCount " + orderCount;
 		// 	message += " average_random_no " + (randSum/timeDifference);
 		// 	pizza.logging(message);
+		// Check both queues to see if orders are complete
+			pizza.regOrderComplete(timeDifference);
+			pizza.vegOrderComplete(timeDifference);
 		}
+
 
 	}
 
