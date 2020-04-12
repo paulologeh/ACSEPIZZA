@@ -52,7 +52,6 @@ void operations::generateOrder(time_t currentTime, int orderID)
 	order regularOrder;	   // non vegetarian queue
 	order vegetarianOrder; // vegetarian queue
 	stringstream currentTimeSS;
-	// vegetarian = true; // remove later
 
 	if (vegetarian)
 	{

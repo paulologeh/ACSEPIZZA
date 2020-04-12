@@ -1,0 +1,8 @@
+
+*********** NEW SIMULATION ****************
+|NewOrder|Pizza=Regular|Time=3|orderID=1|Toppings=10 9 9 8 9 5 2 9 8 |OrderReadyTime=318|
+|NewOrder|Pizza=Regular|Time=10|orderID=2|Toppings=9 5 5 3 1 5 3 |Note=Oven is in use until 318|OrderReadyTime=498|
+|NewOrder|Pizza=Regular|Time=21|orderID=3|Toppings=6 7 2 6 9 3 7 9 8 |Note=Oven is in use until 498|OrderReadyTime=678|
+|NewOrder|Pizza=Vegetarian|Time=63|orderID=4|Toppings=10 |OrderReadyTime=338|
+|NewOrder|Pizza=Regular|Time=67|orderID=5|Toppings=8 9 5 7 4 5 7 |Note=Oven is in use until 678|OrderReadyTime=858|
+|NewOrder|Pizza=Regular|Time=90|orderID=6|Toppings=9 5 8 4 |Note=Oven is in use until 858|OrderReadyTime=1038|

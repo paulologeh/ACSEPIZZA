@@ -2,11 +2,28 @@
 #include <ctime>
 #include "simulation.h"
 
-#define MAX_TIME 500
+#define MAX_TIME 1800
 #define PRINT_TIME 5
 #define INTERVAL 1
 
 using namespace std;
+
+void postSimulation::initialise()
+{
+	randSum = 0;
+	randCount = 0;
+}
+
+void postSimulation::updateRands(int isOrder)
+{
+	randSum += isOrder;
+	randCount++;
+}
+
+int postSimulation::randomAverage()
+{
+	return randSum / randCount;
+}
 
 void simulation::simulate()
 {
@@ -18,6 +35,8 @@ void simulation::simulate()
 
 	orderID = 0;
 	srand(time(NULL));
+	benchmarks.initialise();
+
 	while (timeDifference < MAX_TIME)
 	{
 		time(&currentTime);
@@ -25,7 +44,8 @@ void simulation::simulate()
 
 		if (difftime(currentTime, T) >= INTERVAL) // Sets simulation time to intervals of INTERVAL
 		{
-			isOrder = rand() % 60 + 1;		   // generate random number every second
+			isOrder = rand() % 60 + 1; // generate random number every second
+			benchmarks.updateRands(isOrder);
 			if (isOrder == 28 || isOrder == 5) // 28 is actually quite rare
 			{
 				cout << "Order placed after " << timeDifference << " seconds" << endl;
@@ -37,7 +57,7 @@ void simulation::simulate()
 			if (difftime(currentTime, time2PrintTime) >= PRINT_TIME)
 			{
 				time(&time2PrintTime); // reset print time
-				cout << "\nTime Elapsed is " << timeDifference << " seconds ..." << endl;
+				cout << "\nTime Elapsed is " << timeDifference << " seconds ...\n";
 			}
 
 			time(&T); // Reset time interval
@@ -49,55 +69,56 @@ void simulation::simulate()
 void simulation::complete()
 {
 	cout << "Simulation is complete\n";
+	cout << "Average Random Number: " << benchmarks.randomAverage() << endl;
 }
 
 void simulation::printACSE()
 {
 	cout << "000000"
-			  << "  000000"
-			  << "    000000"
-			  << "    000000\n";
+		 << "  000000"
+		 << "    000000"
+		 << "    000000\n";
 	cout << "0    0"
-			  << "  0     "
-			  << "    0     "
-			  << "    0     \n";
+		 << "  0     "
+		 << "    0     "
+		 << "    0     \n";
 	cout << "000000"
-			  << "  0     "
-			  << "    000000"
-			  << "    000000\n";
+		 << "  0     "
+		 << "    000000"
+		 << "    000000\n";
 	cout << "0    0"
-			  << "  0     "
-			  << "         0"
-			  << "    0     \n";
+		 << "  0     "
+		 << "         0"
+		 << "    0     \n";
 	cout << "0    0"
-			  << "  000000"
-			  << "    000000"
-			  << "    000000\n";
+		 << "  000000"
+		 << "    000000"
+		 << "    000000\n";
 	cout << "\n";
 	cout << "000000  "
-			  << "  00    "
-			  << "    000000"
-			  << "    000000"
-			  << "    000000\n";
+		 << "  00    "
+		 << "    000000"
+		 << "    000000"
+		 << "    000000\n";
 	cout << "0    0  "
-			  << "  00    "
-			  << "        00"
-			  << "        00"
-			  << "    0    0\n";
+		 << "  00    "
+		 << "        00"
+		 << "        00"
+		 << "    0    0\n";
 	cout << "000000  "
-			  << "  00    "
-			  << "       00 "
-			  << "       00 "
-			  << "    000000\n";
+		 << "  00    "
+		 << "       00 "
+		 << "       00 "
+		 << "    000000\n";
 	cout << "0       "
-			  << "  00    "
-			  << "      00  "
-			  << "      00  "
-			  << "    0    0\n";
+		 << "  00    "
+		 << "      00  "
+		 << "      00  "
+		 << "    0    0\n";
 	cout << "0       "
-			  << "  00    "
-			  << "    000000"
-			  << "    000000"
-			  << "    0    0\n";
+		 << "  00    "
+		 << "    000000"
+		 << "    000000"
+		 << "    0    0\n";
 	cout << "\n";
 }

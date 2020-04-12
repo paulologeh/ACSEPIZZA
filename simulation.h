@@ -2,7 +2,16 @@
 #include <ctime>
 #include "operations.h"
 
-using namespace std;
+class postSimulation
+{
+private:
+	int randSum, randCount;
+
+public:
+	void initialise();
+	void updateRands(int);
+	int randomAverage();
+};
 
 class simulation
 {
@@ -17,4 +26,5 @@ public:
 	void printACSE();
 	void complete();
 	operations pizza;
+	postSimulation benchmarks;
 };
