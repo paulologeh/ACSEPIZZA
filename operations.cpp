@@ -1,10 +1,7 @@
-//Builds functions to generate order, calculate preparation time, oven ready status and order complete fucntion
 #include "operations.h"
 #include <string>
 #include <sstream>
-#include <math.h>
 #include <iostream>
-#include <cstdlib>
 #include <queue>
 #include <ctime>
 

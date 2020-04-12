@@ -1,7 +1,3 @@
-// header file string.h
-// contains function to simulate time and determine order
-
-#include <string.h>
 #include <iostream>
 #include <ctime>
 #include "operations.h"
@@ -12,6 +8,9 @@ class simulation
 {
 private:
 	int orderID;
+	int isOrder;
+	time_t startTime, currentTime, time2PrintTime, T;
+	time_t timeDifference;
 
 public:
 	void simulate();

@@ -1,7 +1,4 @@
-#include <string>
 #include <iostream>
-#include <fstream>
-#include <cstdlib>
 #include <ctime>
 #include "simulation.h"
 
@@ -13,14 +10,12 @@ using namespace std;
 
 void simulation::simulate()
 {
-	time_t startTime, currentTime, time2PrintTime, T;
 	time(&startTime);
 	time(&currentTime);
 	time(&time2PrintTime);
 	time(&T);
-	time_t timeDifference = difftime(currentTime, startTime);
+	timeDifference = difftime(currentTime, startTime);
 
-	int isOrder, orderCount = 0;
 	orderID = 0;
 	srand(time(NULL));
 	while (timeDifference < MAX_TIME)
@@ -37,8 +32,6 @@ void simulation::simulate()
 				cout << "Please prepare Pizza Base " << endl;
 				orderID++;
 				pizza.generateOrder(timeDifference, orderID);
-
-				orderCount += 1;
 			}
 
 			if (difftime(currentTime, time2PrintTime) >= PRINT_TIME)
@@ -60,51 +53,51 @@ void simulation::complete()
 
 void simulation::printACSE()
 {
-	std::cout << "000000"
+	cout << "000000"
 			  << "  000000"
 			  << "    000000"
 			  << "    000000\n";
-	std::cout << "0    0"
+	cout << "0    0"
 			  << "  0     "
 			  << "    0     "
 			  << "    0     \n";
-	std::cout << "000000"
+	cout << "000000"
 			  << "  0     "
 			  << "    000000"
 			  << "    000000\n";
-	std::cout << "0    0"
+	cout << "0    0"
 			  << "  0     "
 			  << "         0"
 			  << "    0     \n";
-	std::cout << "0    0"
+	cout << "0    0"
 			  << "  000000"
 			  << "    000000"
 			  << "    000000\n";
-	std::cout << "\n";
-	std::cout << "000000  "
+	cout << "\n";
+	cout << "000000  "
 			  << "  00    "
 			  << "    000000"
 			  << "    000000"
 			  << "    000000\n";
-	std::cout << "0    0  "
+	cout << "0    0  "
 			  << "  00    "
 			  << "        00"
 			  << "        00"
 			  << "    0    0\n";
-	std::cout << "000000  "
+	cout << "000000  "
 			  << "  00    "
 			  << "       00 "
 			  << "       00 "
 			  << "    000000\n";
-	std::cout << "0       "
+	cout << "0       "
 			  << "  00    "
 			  << "      00  "
 			  << "      00  "
 			  << "    0    0\n";
-	std::cout << "0       "
+	cout << "0       "
 			  << "  00    "
 			  << "    000000"
 			  << "    000000"
 			  << "    0    0\n";
-	std::cout << "\n";
+	cout << "\n";
 }
