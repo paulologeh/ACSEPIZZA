@@ -10,15 +10,12 @@ using namespace std;
 
 class simulation
 {
-	private:
-		time_t currentTime;
-		int orderID;
+private:
+	int orderID;
 
-	public:
-
-		void simulate();
-		void printACSE();
-		operations pizza;
-
-
+public:
+	void simulate();
+	void printACSE();
+	void complete();
+	operations pizza;
 };

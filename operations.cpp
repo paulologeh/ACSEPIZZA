@@ -55,7 +55,7 @@ void operations::generateOrder(time_t currentTime, int orderID)
 	order regularOrder;	   // non vegetarian queue
 	order vegetarianOrder; // vegetarian queue
 	stringstream currentTimeSS;
-	vegetarian = true; // remove later
+	// vegetarian = true; // remove later
 
 	if (vegetarian)
 	{
@@ -71,7 +71,7 @@ void operations::generateOrder(time_t currentTime, int orderID)
 		vegetarianOrder.pizzaType = "Vegetarian";
 		vegetarianOrder.orderNumber = orderID;
 		vegetarianOrder.orderTime = currentTime;
-		vegOven = vegOvenReady(currentTime);
+		vegOven = ovenReady(currentTime, vegRoll);
 
 		if (vegOven)
 		{
@@ -104,7 +104,7 @@ void operations::generateOrder(time_t currentTime, int orderID)
 		regularOrder.pizzaType = "Regular";
 		regularOrder.orderNumber = orderID;
 		regularOrder.orderTime = currentTime;
-		regOven = regOvenReady(currentTime);
+		regOven = ovenReady(currentTime, regRoll);
 
 		if (regOven)
 		{
@@ -131,51 +131,44 @@ time_t operations::calculatePrepTime(int toppingsNumber)
 	return (30 + 30 + (toppingsNumber * 5) + 30);
 }
 
-bool operations::vegOvenReady(time_t currentTime)
+bool operations::ovenReady(time_t currentTime, queue<order> &Roll)
 {
-	if (vegRoll.empty())
+	if (Roll.empty()) // when no orders are in the queue
 	{
 		return true;
 	}
 	else
 	{
-		lastReadyTimeVeg = vegRoll.back().readyTime;
-		return currentTime >= lastReadyTimeVeg;
+		if (Roll.back().pizzaType == "Vegetarian") // veterian queue
+		{
+			lastReadyTimeVeg = Roll.back().readyTime;
+			return currentTime >= lastReadyTimeVeg;
+		}
+		else
+		{
+			lastReadyTimeReg = Roll.back().readyTime;
+			return currentTime >= lastReadyTimeReg;
+		}
 	}
 }
 
-bool operations::regOvenReady(time_t currentTime)
+void operations::orderComplete(time_t currentTime)
 {
-	if (regRoll.empty())
+	if (!vegRoll.empty() && currentTime >= vegRoll.front().readyTime) // has current time passed the order time of the oldest element in the queue
 	{
-		return true;
-	}
-	else
-	{
-		lastReadyTimeReg = regRoll.back().readyTime;
-		return currentTime >= lastReadyTimeReg;
-	}
-}
-
-void operations::regOrderComplete(time_t currentTime)
-{
-	if (currentTime >= regRoll.front().readyTime && !regRoll.empty()) // has current time passed the order time of the oldest element in the queue
-	{
-		string message = "|OrderComplete|Pizza=" + regRoll.front().pizzaType + "|orderID=" + to_string(regRoll.front().orderNumber) + "|CompletedTime=" + to_string(currentTime) + "|";
-		logging(message);
-		cout << message << endl;
-		regRoll.pop();
-	}
-}
-
-void operations::vegOrderComplete(time_t currentTime)
-{
-	if (currentTime >= vegRoll.front().readyTime && !vegRoll.empty()) // has current time passed the order time of the oldest element in the queue
-	{
-		string message = "|OrderComplete|Pizza=" + vegRoll.front().pizzaType + "|orderID=" + to_string(vegRoll.front().orderNumber) + "|CompletedTime=" + to_string(currentTime) + "|";
+		time_t waitTime = currentTime - vegRoll.front().orderTime;
+		string message = "|OrderComplete|Pizza=" + vegRoll.front().pizzaType + "|orderID=" + to_string(vegRoll.front().orderNumber) + "|WaitTime=" + to_string(waitTime) + "|CompletedTime=" + to_string(currentTime) + "|";
 		logging(message);
 		cout << message << endl;
 		vegRoll.pop();
+	}
+	if (!regRoll.empty() && currentTime >= regRoll.front().readyTime) // has current time passed the order time of the oldest element in the queue
+	{
+		time_t waitTime = currentTime - regRoll.front().orderTime;
+		string message = "|OrderComplete|Pizza=" + regRoll.front().pizzaType + "|orderID=" + to_string(regRoll.front().orderNumber) + "|WaitTime=" + to_string(waitTime) + "|CompletedTime=" + to_string(currentTime) + "|";
+		logging(message);
+		cout << message << endl;
+		regRoll.pop();
 	}
 }
 

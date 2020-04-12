@@ -6,16 +6,6 @@
 
 using namespace std;
 
-// struct vegOrder
-// {
-// 	int readyTime;
-// 	time_t orderTime;
-// 	int toppings[9];
-// 	bool pizzaType;
-// 	int orderNumber;
-// 	time_t ovenTime;
-// };
-
 struct order
 {
 	time_t readyTime;
@@ -39,10 +29,8 @@ private:
 
 public:
 	time_t calculatePrepTime(int);
-	bool vegOvenReady(time_t);
-	bool regOvenReady(time_t);
+	bool ovenReady(time_t, queue<order> &);
 	void generateOrder(time_t, int);
-	void vegOrderComplete(time_t);
-	void regOrderComplete(time_t);
+	void orderComplete(time_t);
 	void logging(string);
 };
