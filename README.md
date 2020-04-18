@@ -1,22 +1,33 @@
 # ACSEPIZZA
-
 This simulates Pizza orders sent to the Automatic and Control Systems Engineering Department Pizza Place. The Pizza orders can be simulated by the program or entered manually by the user. It calculates how much time it takes to prepare the order and tells when it would be ready given a queue of orders and only two pizza ovens. 
+![alt text](https://github.com/paulologeh/ACSEPIZZA/blob/master/readme.png)
 
-
-## Installation
-Clone the repository locally
+## Setup
+### Mac/Linux
+1. Install the GNU C++ Compiler using yum or apt or homebrew installer you use
+```bash
+sudo apt install gcc
+```
+2. Open up a terminal. If you have a mac (bash/zsh) will be the default terminal shell. Navigate to your desired directory and clone the repository. You can also download and unzip the repository.
 ```bash
 git clone https://github.com/paulologeh/ACSEPIZZA.git
 ```
-Install dependencies using yum or apt or brew or whichever installer you use
-``` bash
-yum install gcc-c++
-``` 
-
+### Windows
+1. Download @https://www.cygwin.com and select gcc, g++ etc and install.
+2. Open up PowerShell or command prompt. Navigate to your desired directory and clone the repository. You can also download and unzip the repository.
+```batch
+git clone https://github.com/paulologeh/ACSEPIZZA.git
+```
 ## Usage
-Run the program
-``` bash
+### Mac/Linux
+1. Run program in terminal
+```bash
 ./run.sh
+```
+### Windows
+1. Open run.bat or run in powershell/command prompt
+```batch
+run.bat
 ```
 
 ## Simulation Details
