@@ -17,6 +17,7 @@ class simulation
 {
 private:
 	bool automatic;
+	char triggerOrder;
 	int orderID;
 	int isOrder;
 	time_t startTime, currentTime, time2PrintTime, T;

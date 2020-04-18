@@ -3,6 +3,7 @@
 #include "simulation.h"
 
 #define MAX_TIME 1800
+#define ORDER_CUTOFF 1485
 #define PRINT_TIME 5
 #define INTERVAL 1
 
@@ -50,7 +51,9 @@ void simulation::simulate()
 		{
 			isOrder = rand() % 60 + 1; // generate random number every second
 			benchmarks.updateRands(isOrder);
-			if (isOrder == 28 || isOrder == 5) // 28 is actually quite rare
+
+			// Generate new order if random number is 5/28 and time below order cutoff
+			if ((isOrder == 28 || isOrder == 5) && timeDifference <= ORDER_CUTOFF)
 			{
 				cout << "Order placed after " << timeDifference << " seconds" << endl;
 				cout << "Please prepare Pizza Base " << endl;
