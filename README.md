@@ -5,7 +5,7 @@ This simulates Pizza orders sent to the Automatic and Control Systems Engineerin
 
 ## Setup
 ### Mac/Linux
-1. Install the GNU C++ Compiler using yum or apt or homebrew installer you use
+1. Install the GNU C++ Compiler
 ```bash
 sudo apt install gcc
 ```
