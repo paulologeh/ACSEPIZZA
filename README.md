@@ -1,6 +1,4 @@
 # ACSEPIZZA
-
-## Overview
 This simulates Pizza orders sent to the Automatic and Control Systems Engineering Department Pizza Place. The Pizza orders can be simulated by the program or entered manually by the user. It calculates how much time it takes to prepare the order and tells when it would be ready given a queue of orders and only two pizza ovens. 
 
 ![alt text](https://github.com/paulologeh/ACSEPIZZA/blob/master/readme.png)
