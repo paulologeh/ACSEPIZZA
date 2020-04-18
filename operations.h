@@ -30,7 +30,7 @@ private:
 public:
 	time_t calculatePrepTime(int);
 	bool ovenReady(time_t, queue<order> &);
-	void generateOrder(time_t, int);
+	void generateOrder(time_t, int, bool);
 	void orderComplete(time_t);
 	void logging(string);
 };

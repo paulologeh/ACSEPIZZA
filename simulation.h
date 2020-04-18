@@ -16,6 +16,7 @@ public:
 class simulation
 {
 private:
+	bool automatic;
 	int orderID;
 	int isOrder;
 	time_t startTime, currentTime, time2PrintTime, T;

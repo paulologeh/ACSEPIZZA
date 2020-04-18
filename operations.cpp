@@ -5,31 +5,45 @@
 #include <queue>
 #include <ctime>
 
-#define PREP_TIME 180
+#define OVEN_TIME 180
 
 using namespace std;
 
-void operations::generateOrder(time_t currentTime, int orderID)
+void operations::generateOrder(time_t currentTime, int orderID, bool mode)
 {
 	cout << "Please choose Pizza topping. You are only allowed a maximum of 9\n";
 	cout << "1. Pepperoni 2. Sausage 3. Mushrooms 4. Peppers 5. Chicken 6. Beef 7. Pinapple 8. Sweetcorn 9. Bacon\n";
 	cout << "Choose topping by entering the topping number then pressing Enter\n";
-	cout << "Enter 0 to stop entering toppings" << endl;
+	cout << "Enter 0 to stop entering toppings if you want less than 9 toppings" << endl;
 
 	int toppingsNumber = 0, choices[9], entered;
 	bool vegetarian = true, userInput = true;
 	srand(time(NULL));
 
+	// Enter order details
 	do
 	{
-		// simulate the order toppings as well
 		if (toppingsNumber == 0)
 		{
-			entered = rand() % 10 + 1;
+			if (mode)
+			{
+				entered = 1 + rand() % 9; // generate between 1 and 9 on first entry
+			}
+			else
+			{
+				cin >> entered;
+			}
 		}
 		else
 		{
-			entered = rand() % 10;
+			if (mode)
+			{
+				entered = rand() % 10; // generate between 0 and 9 on other entries
+			}
+			else
+			{
+				cin >> entered;
+			}
 		}
 
 		if (entered == 0 || toppingsNumber >= 9)
@@ -80,7 +94,7 @@ void operations::generateOrder(time_t currentTime, int orderID)
 			message += ("|Note=Oven is in use until " + to_string(lastReadyTimeVeg));
 		}
 
-		vegetarianOrder.readyTime = vegetarianOrder.ovenTime + PREP_TIME;
+		vegetarianOrder.readyTime = vegetarianOrder.ovenTime + OVEN_TIME;
 		message += ("|OrderReadyTime=" + to_string(vegetarianOrder.readyTime) + "|");
 		vegRoll.push(vegetarianOrder);
 		logging(message);
@@ -102,9 +116,8 @@ void operations::generateOrder(time_t currentTime, int orderID)
 		regularOrder.orderTime = currentTime;
 		regOven = ovenReady(currentTime, regRoll);
 
-		if (regOven)
+		if (regOven) // if oven is ready
 		{
-			// oven is ready
 			regularOrder.ovenTime = regularOrder.orderTime + calculatePrepTime(toppingsNumber);
 		}
 		else
@@ -113,7 +126,7 @@ void operations::generateOrder(time_t currentTime, int orderID)
 			message += ("|Note=Oven is in use until " + to_string(lastReadyTimeReg));
 		}
 
-		regularOrder.readyTime = regularOrder.ovenTime + PREP_TIME;
+		regularOrder.readyTime = regularOrder.ovenTime + OVEN_TIME;
 		message += ("|OrderReadyTime=" + to_string(regularOrder.readyTime) + "|");
 		regRoll.push(regularOrder);
 		logging(message);
@@ -123,7 +136,13 @@ void operations::generateOrder(time_t currentTime, int orderID)
 
 time_t operations::calculatePrepTime(int toppingsNumber)
 {
-	// time = baseTime + customerTime + toppingsTime + pizzasaucetime;
+	/*
+	time = baseTime + customerTime + toppingsTime + pizzasaucetime;
+	baseTime is time to prepare the base (30 seconds)
+	customerTime is time for the person to make order (30 seconds)
+	toppingsTime is the time to add each topping (5 seconds)
+	pizzasaucetime is the time to add pizza sauce (30 seconds)
+	*/
 	return (30 + 30 + (toppingsNumber * 5) + 30);
 }
 
@@ -170,7 +189,7 @@ void operations::orderComplete(time_t currentTime)
 
 void operations::logging(string message)
 {
-	logs.open("acse_pizza.log", ios::app);
+	logs.open("acse_pizza.log", ios::app); // open log file for appending
 	logs << message << endl;
 	logs.close();
 }

@@ -27,6 +27,10 @@ int postSimulation::randomAverage()
 
 void simulation::simulate()
 {
+	cout << "Enter 1 for automatic orders or 0 to manually enter orders" << endl;
+	cin >> automatic;
+
+	// Get initial times
 	time(&startTime);
 	time(&currentTime);
 	time(&time2PrintTime);
@@ -51,7 +55,7 @@ void simulation::simulate()
 				cout << "Order placed after " << timeDifference << " seconds" << endl;
 				cout << "Please prepare Pizza Base " << endl;
 				orderID++;
-				pizza.generateOrder(timeDifference, orderID);
+				pizza.generateOrder(timeDifference, orderID, automatic);
 			}
 
 			if (difftime(currentTime, time2PrintTime) >= PRINT_TIME)
